@@ -20,8 +20,6 @@ Developed as part of my internship assignment at **Fidrox Technologies Private L
 - JavaScript (Vanilla)  
 - Bootstrap 4  
 - jQuery  
-- Toastr (notifications)  
-- jqGrid (tabular data)  
 - AdminLTE (UI template)
 
 ---
