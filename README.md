@@ -1,69 +1,50 @@
+
 # 🗓️ Appointment UI Design
 
-Hi there! 👋  
-This is a clean and responsive web-based appointment form built using **HTML**, **CSS**, **JavaScript**, and the **AdminLTE** dashboard framework.
+This project is a responsive, tab-based web appointment form designed using **AdminLTE**, **HTML**, **CSS**, **JavaScript**, and supporting frameworks.  
 
-It was developed as part of my internship at **Fidrox Technologies**, where I was assigned a frontend task to implement a tabbed layout UI for booking appointments.
-
----
-
-## 🌐 Live Developer Portfolio
-
-Check out more about me and my work at:  
-👉 [https://www.sudarsan.net.in/](https://www.sudarsan.net.in/)
+Developed as part of my internship assignment at **Fidrox Technologies Private Limited**, Bangalore — the goal was to create a professional UI to capture appointment-related data with clean, modern design principles.
 
 ---
 
-## 🔧 Tech Stack
+## 🌐 Live Demo
 
-- HTML5 + CSS3  
+🔗 **[View the project live on GitHub Pages](https://sudarsansda.github.io/appointment-ui-design/)**
+
+---
+
+## 💻 Tech Stack
+
+- HTML5  
+- CSS3  
 - JavaScript (Vanilla)  
 - Bootstrap 4  
 - jQuery  
-- Toastr (toast notifications)  
-- jqGrid (data tables)  
-- AdminLTE (admin UI template)
+- Toastr (notifications)  
+- jqGrid (tabular data)  
+- AdminLTE (UI template)
 
 ---
 
-## 📸 Screenshots
-
-| Details Tab | Additional Tab |
-|-------------|----------------|
-| ![Details Tab Screenshot](screenshots/Details_Tab.png) | ![Additional Tab Screenshot](screenshots/Additional_Tab.png) |
-
-
-
----
-
-## 🧪 How to Run
-
-1. Clone the repo
-2. Open `index.html` in your browser
-3. Done 🎉
-
----
-
-## 📘 What I Learned
-
-- Using AdminLTE for rapid UI development  
-- Integrating various frontend tools together  
-- Creating clean tabbed UIs  
-- Writing readable and maintainable HTML/CSS
-
----
-
-## 🙋‍♂️ About Me
+## 👨‍💻 About Me
 
 **P. Sudarsan**  
 B.Tech – Computer Engineering  
 📧 [sudarsanjcr@gmail.com](mailto:sudarsanjcr@gmail.com)  
-📱 +91 94411 54744  
-🌐 [sudarsan.net.in](https://www.sudarsan.net.in/)
+🌐 [https://www.sudarsan.net.in](https://www.sudarsan.net.in)
+
+
+
 
 ---
 
-## 📄 License
+## 🏢 Project Attribution
 
-This project is licensed under the MIT License.  
-Feel free to use, share, and learn from it — just don't forget to drop a star ⭐ if you find it useful!
+This project was created for and is attributed to:
+
+**Fidrox Technologies Private Limited**  
+Jayanagar, Bangalore – INDIA  
+📅 Internship Project – 2025  
+📝 UI Assignment – Appointment Form  
+
+> **© 2025 Fidrox Technologies Private Limited, Bangalore, INDIA. All rights reserved.**
