@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VisitorManagementAPI.Data;
 using VisitorManagementAPI.Models;
-
-// Make sure this namespace matches your project name!
 namespace VisitorManagementAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -16,7 +14,6 @@ namespace VisitorManagementAPI.Controllers
             _context = context;
         }
 
-        // POST: api/appointments
         [HttpPost]
         public async Task<IActionResult> CreateAppointment([FromBody] Appointment appointment)
         {
@@ -28,7 +25,6 @@ namespace VisitorManagementAPI.Controllers
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 
-            // Return the created object with its new DB-generated Id
             return Ok(appointment);
         }
     }
