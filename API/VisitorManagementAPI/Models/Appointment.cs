@@ -8,7 +8,6 @@ namespace VisitorManagementAPI.Models
         [Key]
         public int Id { get; set; }
 
-        // Details Tab
         public string? VisitorType { get; set; }
         public string? VisitorName { get; set; }
         public string? VisitorEmail { get; set; }
@@ -18,13 +17,11 @@ namespace VisitorManagementAPI.Models
         public string? Gate { get; set; }
         public string? Area { get; set; }
         public DateTime MeetingOn { get; set; }
-        public DateTime? MeetingTo { get; set; } // Nullable DateTime
+        public DateTime? MeetingTo { get; set; }
         public bool AllDay { get; set; }
         public bool RepeatVisit { get; set; }
         public string? Scheduler { get; set; }
         public string? Recurrence { get; set; }
-
-        // Additional Tab
         public bool AssistanceRequired { get; set; }
         public bool ServiceProviderAccess { get; set; }
         public bool WifiRequired { get; set; }
