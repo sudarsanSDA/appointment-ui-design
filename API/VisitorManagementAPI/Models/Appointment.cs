@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-// Make sure this namespace matches your project name!
+
 namespace VisitorManagementAPI.Models
 {
     public class Appointment
