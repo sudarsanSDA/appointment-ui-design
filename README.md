@@ -7,11 +7,7 @@ Developed as part of my internship assignment at **Fidrox Technologies Private L
 
 ---
 
-## 🌐 Live Demo
 
-🔗 **[View the project live on GitHub Pages](https://sudarsansda.github.io/appointment-ui-design/)**
-
----
 
 ## 💻 Tech Stack
 
