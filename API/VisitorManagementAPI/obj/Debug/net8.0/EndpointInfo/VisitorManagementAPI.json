@@ -1,0 +1,136 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "VisitorManagementAPI",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Appointments": {
+      "post": {
+        "tags": [
+          "Appointments"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Appointment"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Appointment"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Appointment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Appointment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "visitorType": {
+            "type": "string",
+            "nullable": true
+          },
+          "visitorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "visitorEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "visitorMobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "purpose": {
+            "type": "string",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "gate": {
+            "type": "string",
+            "nullable": true
+          },
+          "area": {
+            "type": "string",
+            "nullable": true
+          },
+          "meetingOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "meetingTo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "allDay": {
+            "type": "boolean"
+          },
+          "repeatVisit": {
+            "type": "boolean"
+          },
+          "scheduler": {
+            "type": "string",
+            "nullable": true
+          },
+          "recurrence": {
+            "type": "string",
+            "nullable": true
+          },
+          "assistanceRequired": {
+            "type": "boolean"
+          },
+          "serviceProviderAccess": {
+            "type": "boolean"
+          },
+          "wifiRequired": {
+            "type": "boolean"
+          },
+          "escortRequired": {
+            "type": "boolean"
+          },
+          "additionalNotification": {
+            "type": "boolean"
+          },
+          "notifyTo": {
+            "type": "string",
+            "nullable": true
+          },
+          "visitorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "checkInInstructions": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
