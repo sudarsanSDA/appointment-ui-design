@@ -1,6 +1,16 @@
 [
   {
     "ContainingType": "VisitorManagementAPI.Controllers.AppointmentsController",
+    "Method": "GetAppointments",
+    "RelativePath": "api/Appointments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "VisitorManagementAPI.Controllers.AppointmentsController",
     "Method": "CreateAppointment",
     "RelativePath": "api/Appointments",
     "HttpMethod": "POST",

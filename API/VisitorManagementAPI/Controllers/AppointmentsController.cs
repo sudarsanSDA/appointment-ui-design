@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using VisitorManagementAPI.Data;
 using VisitorManagementAPI.Models;
 
@@ -14,6 +15,14 @@ namespace VisitorManagementAPI.Controllers
         public AppointmentsController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        // GET: api/appointments
+        [HttpGet]
+        public async Task<IActionResult> GetAppointments()
+        {
+            var appointments = await _context.Appointments.ToListAsync();
+            return Ok(appointments);
         }
 
         // POST: api/appointments

@@ -163,10 +163,10 @@ L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\static
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\staticwebassets.build.json.cache
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\staticwebassets.development.json
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\VisitorM.F27B6273.Up2Date
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\VisitorManagementAPI.dll
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\refint\VisitorManagementAPI.dll
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\VisitorManagementAPI.pdb
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\VisitorManagementAPI.genruntimeconfig.cache
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\ref\VisitorManagementAPI.dll
+L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
