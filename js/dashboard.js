@@ -21,3 +21,4 @@ $(document).ready(function() {
     // Optionally, load 'Expected Visitors' by default
     loadVisitorData('Expected');
 });
+
