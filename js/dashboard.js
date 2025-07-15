@@ -1,53 +1,23 @@
-$(document).ready(function () {
-    const apiBaseUrl = 'https://your-api-domain.com/api/visitors'; // Replace with your API
+$(document).ready(function() {
 
-    function renderTable(statusType) {
-        $('#visitor-list-title').html(`<b>${statusType} Visitors</b>`);
-        const tableBody = $('#visitor-table-body');
-        tableBody.html(`<tr><td colspan="10" class="text-center">Loading...</td></tr>`);
+    // Function to load data for a given status
+    function loadVisitorData(status) {
+        // TODO: Replace with your API call to fetch visitors by status
+        console.log("Loading data for:", status);
 
-        $.ajax({
-            url: `${apiBaseUrl}?status=${statusType}`,
-            method: 'GET',
-            success: function (data) {
-                tableBody.empty();
-                if (data.length === 0) {
-                    tableBody.append(`<tr><td colspan="10" class="text-center">No records found</td></tr>`);
-                } else {
-                    data.forEach(visitor => {
-                        tableBody.append(`
-                            <tr>
-                                <td><img src="${visitor.photoUrl || 'https://via.placeholder.com/40'}" alt="Photo" width="40"></td>
-                                <td>${visitor.id}</td>
-                                <td>${visitor.name || 'N/A'}</td>
-                                <td>${visitor.mobile || 'N/A'}</td>
-                                <td>${visitor.host || 'N/A'}</td>
-                                <td>${visitor.location || 'N/A'}</td>
-                                <td>${visitor.purpose || 'N/A'}</td>
-                                <td>${formatDateTime(visitor.meetingFrom)}</td>
-                                <td>${formatDateTime(visitor.meetingTo)}</td>
-                                <td>${visitor.status || 'N/A'}</td>
-                            </tr>
-                        `);
-                    });
-                }
-            },
-            error: function () {
-                tableBody.html(`<tr><td colspan="10" class="text-center text-danger">Failed to load data</td></tr>`);
-            }
-        });
+        // Example of updating table title
+        $('#visitor-list-title').text(status + ' Visitors');
+
+        // Simulating data load
+        $('#visitor-table-body').html(`<tr><td colspan="13">${status} data loaded here...</td></tr>`);
     }
 
-    function formatDateTime(dateString) {
-        if (!dateString) return 'N/A';
-        const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-        return new Date(dateString).toLocaleDateString('en-US', options);
-    }
-
-    $('.status-filter').click(function () {
-        const statusType = $(this).data('type');
-        renderTable(statusType);
+    // Click listeners for each filter box
+    $('.small-box').on('click', function() {
+        const status = $(this).find('p').text().replace(/\s+/g, '');
+        loadVisitorData(status);
     });
 
-    renderTable('Expected'); // Default load
+    // Optionally, load 'Expected Visitors' by default
+    loadVisitorData('Expected');
 });

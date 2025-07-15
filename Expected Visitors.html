@@ -4,45 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visitor Management System Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>.small-box { cursor: pointer; }</style>
+    
+    
 </head>
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
 
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light custom-navbar navbar-inner-4shadow position-relative">
         <div class="position-absolute w-100 text-center">
-            <span class="h5 font-weight-bold text-uppercase">Visitor Management System</span>
+            <span class="h5 font-weight-bold text-uppercase">
+              Visitor Management System
+            </span>
         </div>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center" href="#">
+                    <i class="fas fa-user mr-2"></i>
+                    <span class="font-weight-bold">Test user</span>
+                </a>
+            </li>
+        </ul>
     </nav>
 
     <div class="content-wrapper">
         <div class="content" style="background-color: #f4f6f9;">
             <div class="container-fluid pt-3">
+                
                 <h2 class="mb-3 font-weight-bold">Dashboard</h2>
+
                 <div class="row">
-                    <div class="col"><div class="small-box bg-warning status-filter" data-type="Expected"><div class="inner"><h3 id="count-Expected">0</h3><p>Expected Visitors</p></div></div></div>
-                    <div class="col"><div class="small-box bg-success status-filter" data-type="CheckedIn"><div class="inner"><h3 id="count-CheckedIn">0</h3><p>Checked-In</p></div></div></div>
-                    <div class="col"><div class="small-box bg-teal status-filter" data-type="InPremises"><div class="inner"><h3 id="count-InPremises">0</h3><p>In-Premises</p></div></div></div>
-                    <div class="col"><div class="small-box bg-danger status-filter" data-type="CrossedDeadlines"><div class="inner"><h3 id="count-CrossedDeadlines">0</h3><p>Crossed Deadlines</p></div></div></div>
-                    <div class="col"><div class="small-box bg-orange status-filter" data-type="Upcoming"><div class="inner"><h3 id="count-Upcoming">0</h3><p>Upcoming Deadlines</p></div></div></div>
-                    <div class="col"><div class="small-box bg-info status-filter" data-type="CheckedOut"><div class="inner"><h3 id="count-CheckedOut">0</h3><p>Checked-Out</p></div></div></div>
+                    <div class="col"><a href="#" id="filter-Expected" class="small-box bg-warning"><div class="inner"><h3 id="count-Expected">0</h3><p>Expected Visitors</p></div></a></div>
+                    <div class="col"><a href="#" id="filter-CheckedIn" class="small-box bg-success"><div class="inner"><h3 id="count-CheckedIn">0</h3><p>Checked-In</p></div></a></div>
+                    <div class="col"><a href="#" id="filter-InPremises" class="small-box bg-teal"><div class="inner"><h3 id="count-InPremises">0</h3><p>In-Premises</p></div></a></div>
+                    <div class="col"><a href="#" id="filter-CrossedDeadlines" class="small-box bg-danger"><div class="inner"><h3 id="count-CrossedDeadlines">0</h3><p>Crossed Deadlines</p></div></a></div>
+                    <div class="col"><a href="#" id="filter-Upcoming" class="small-box bg-orange"><div class="inner"><h3 id="count-Upcoming">0</h3><p>Upcoming Deadlines</p></div></a></div>
+                    <div class="col"><a href="#" id="filter-CheckedOut" class="small-box bg-info"><div class="inner"><h3 id="count-CheckedOut">0</h3><p>Checked-Out</p></div></a></div>
                 </div>
 
                 <div class="card mt-2">
                     <div class="card-header">
                         <h3 class="card-title" id="visitor-list-title"><b>Expected Visitors</b></h3>
+                        <div class="card-tools">
+                            <a href="#" class="btn btn-sm btn-light border">
+                                <i class="fas fa-plus"></i> New Appointment
+                            </a>
+                            <div class="input-group input-group-sm d-inline-flex" style="width: 250px; margin-left: 15px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                <div class="input-group-append"><button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Photo</th><th>Appt ID</th><th>Visitor Name</th><th>Mobile</th><th>Host</th><th>Location</th><th>Purpose</th><th>Meeting From</th><th>Meeting To</th><th>Status</th>
+                                    <th>Photo</th><th>Appt ID</th><th>Appt Type</th><th>Visitor Name</th><th>Visitor Type</th><th>Mobile</th><th>Host</th><th>Location</th><th>Purpose</th><th>Meeting From</th><th>Meeting To</th><th>Recurring</th><th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="visitor-table-body"></tbody>
+                            <tbody id="visitor-table-body">
+                            </tbody>
                         </table>
+                    </div>
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                        </ul>
                     </div>
                 </div>
 
@@ -50,13 +79,26 @@
         </div>
     </div>
 
-    <footer class="main-footer text-center">
-        Copyright © 2025 <a href="https://fidrox.com/">Fidrox Technologies Private Limited</a>
+
+    <footer class="main-footer d-flex justify-content-between align-items-center px-3 py-2" style="background-color: #ffffff !important; border-top: 1px solid #dee2e6; position: relative;">
+        <div></div>
+        <div class="text-center w-100" style="position: absolute; left: 0; right: 0; pointer-events: none;">
+            <span class="text-muted small" style="pointer-events: auto;">
+                Copyright © 2025 <a href="https://fidrox.com/">Fidrox Technologies Private Limited</a>, Bangalore, INDIA. All rights reserved.
+            </span>
+        </div>
+        <div class="d-flex align-items-center">
+            <img src="https://fidrox.com/wp-content/uploads/2023/06/Fidrox.png" alt="Company Logo" height="30">
+        </div>
     </footer>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+
 <script src="js/dashboard.js"></script>
 
 </body>
