@@ -63,7 +63,7 @@ To run this project locally, you will need **Visual Studio 2022** with the **ASP
 1. **Configure API Endpoint:** Open `script.js` and ensure the `apiUrl` matches the backend port:
 
    ```javascript
-   const apiUrl = 'https://localhost:7103/api/appointments'; // Update if backend port is different
+   const apiUrl = 'https://localhost:7103/api/appointments'; 
    ```
 2. **Launch the App:** Open `index.html` in your browser. The form and dashboard will now be active.
 
