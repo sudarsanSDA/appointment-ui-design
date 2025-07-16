@@ -18,7 +18,6 @@ $(document).ready(function() {
     // Submit Button Logic
     $('#submitBtn').on('click', function() {
         const formData = {
-            // Details Tab
             visitorType: $('#visitorType').val(),
             visitorName: $('#visitorName').val(),
             visitorEmail: $('#visitorEmail').val(),
@@ -33,8 +32,6 @@ $(document).ready(function() {
             repeatVisit: $('#repeatVisit').is(':checked'),
             scheduler: $('#scheduler').val(),
             recurrence: $('#recurrence').val(),
-
-            // Additional Tab
             assistanceRequired: $('#assistance').is(':checked'),
             serviceProviderAccess: $('#serviceAccess').is(':checked'),
             wifiRequired: $('#wifiRequired').is(':checked'),
@@ -45,9 +42,12 @@ $(document).ready(function() {
             checkInInstructions: $('#checkInInstructions').val()
         };
 
-        console.log("Submitting:", formData);
+        // --- THIS IS THE FIX ---
+        // The URL now correctly points to /api/Appointments to match your controller.
+        const apiUrl = 'https://visitor-management-api-sudarsan-a0fshadyesard2fa.southeastasia-01.azurewebsites.net/api/Appointments';
 
-        const apiUrl = 'https://your-api-url.com/api/appointments'; // Replace with actual API URL
+        console.log("Submitting to API:", apiUrl);
+        console.log("Form Data:", formData);
 
         $.ajax({
             url: apiUrl,
@@ -62,6 +62,7 @@ $(document).ready(function() {
             error: function(jqXHR, textStatus, errorThrown) {
                 alert('Error booking appointment. See console for details.');
                 console.error('AJAX Error:', textStatus, errorThrown);
+                console.error('Response Status:', jqXHR.status);
                 console.error('Response Text:', jqXHR.responseText);
             }
         });
