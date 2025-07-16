@@ -169,4 +169,3 @@ L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\refint
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\VisitorManagementAPI.pdb
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\VisitorManagementAPI.genruntimeconfig.cache
 L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\ref\VisitorManagementAPI.dll
-L:\Work\VisitorManagementSystem\API\VisitorManagementAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

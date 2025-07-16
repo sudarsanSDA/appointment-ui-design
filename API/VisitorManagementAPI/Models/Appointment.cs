@@ -33,5 +33,10 @@ namespace VisitorManagementAPI.Models
         public string? NotifyTo { get; set; }
         public string? VisitorMessage { get; set; }
         public string? CheckInInstructions { get; set; }
+
+        // --- THIS IS THE NEW PROPERTY ---
+        // We add a 'Status' property to track the state of the appointment.
+        // We give it a default value of "Expected" so all new appointments start correctly.
+        public string? Status { get; set; } = "Expected";
     }
 }

@@ -17,12 +17,26 @@ namespace VisitorManagementAPI.Controllers
             _context = context;
         }
 
-        // GET: api/appointments
+        // --- THIS METHOD IS UPGRADED ---
+        // It now handles two types of requests:
+        // 1. GET: api/Appointments (gets all appointments)
+        // 2. GET: api/Appointments?status=CheckedIn (gets only appointments with a specific status)
         [HttpGet]
-        public async Task<IActionResult> GetAppointments()
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments([FromQuery] string? status)
         {
-            var appointments = await _context.Appointments.ToListAsync();
-            return Ok(appointments);
+            // Start with a query for all appointments.
+            // Using AsQueryable() lets us build the query step-by-step.
+            var query = _context.Appointments.AsQueryable();
+
+            // If a 'status' is provided in the URL (e.g., "?status=CheckedIn"),
+            // we add a filter to our database query.
+            if (!string.IsNullOrEmpty(status))
+            {
+                query = query.Where(a => a.Status == status);
+            }
+
+            // Execute the final query, order by the newest first, and return the list.
+            return await query.OrderByDescending(a => a.MeetingOn).ToListAsync();
         }
 
         // POST: api/appointments
@@ -33,6 +47,9 @@ namespace VisitorManagementAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            // Because our model has a default value for Status, we don't need to set it here.
+            // It will automatically be "Expected".
 
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
