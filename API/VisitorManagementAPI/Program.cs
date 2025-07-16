@@ -2,16 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 // This using statement is needed for your ApplicationDbContext
 using VisitorManagementAPI.Data;
+// This using statement is required for logging
+using Microsoft.Extensions.Logging;
+// --- NEW --- This using statement is required for the Forwarded Headers fix
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add the Database Context service
-// This line stays exactly the same.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add the CORS policy service
-// This line stays exactly the same.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -28,9 +30,17 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// --- START: NEW CODE TO ADD ---
-// This new block will run your database migrations automatically.
-// It's the only change needed in this file.
+// --- START: NEW CODE FOR AZURE HOSTING ---
+// This tells the app to trust the proxy headers from Azure.
+// It must be placed before other middleware like UseHttpsRedirection.
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+// --- END: NEW CODE FOR AZURE HOSTING ---
+
+
+// This block runs your database migrations automatically on startup.
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -49,7 +59,6 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred during database migration.");
     }
 }
-// --- END: NEW CODE TO ADD ---
 
 
 // Configure the HTTP request pipeline.
@@ -59,6 +68,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// This will now work correctly because of the Forwarded Headers middleware
 app.UseHttpsRedirection();
 
 // Activate the CORS policy
