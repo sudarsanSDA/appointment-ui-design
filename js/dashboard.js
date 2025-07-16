@@ -1,24 +1,15 @@
 $(document).ready(function() {
 
-    // The API URL is correct and points to your "Appointments" controller.
     const API_BASE_URL = 'https://visitor-management-api-sudarsan-a0fshadyesard2fa.southeastasia-01.azurewebsites.net/api/Appointments';
 
     /**
-     * This function now correctly fetches data from the API based on the status.
-     * It also provides better user feedback in the table.
+     * This function's ONLY job is to load the visitor list into the main table.
+     * It no longer worries about the counts in the colored boxes.
      */
     function loadVisitorData(status = 'Expected') {
-        let apiUrl = API_BASE_URL;
-        
-        // If a status is provided, add it to the URL as a query parameter.
-        // e.g., .../api/Appointments?status=CheckedIn
-        if (status && status !== 'All') {
-             apiUrl = `${API_BASE_URL}?status=${status}`;
-        }
-        
-        console.log(`Loading data for status: "${status}" from URL: ${apiUrl}`);
+        let apiUrl = `${API_BASE_URL}?status=${status}`;
+        console.log(`Loading visitor list for: "${status}" from URL: ${apiUrl}`);
 
-        // Update the title and show a loading spinner.
         $('#visitor-list-title').html(`<b>${status.replace(/([A-Z])/g, ' $1').trim()} Visitors</b>`);
         const tableBody = $('#visitor-table-body');
         tableBody.html('<tr><td colspan="13" class="text-center p-4"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Loading...</td></tr>');
@@ -27,39 +18,29 @@ $(document).ready(function() {
             url: apiUrl,
             type: 'GET',
             success: function(appointments) {
-                tableBody.empty(); // Clear the table before adding new data.
+                tableBody.empty();
                 if (!appointments || appointments.length === 0) {
                     tableBody.html(`<tr><td colspan="13" class="text-center p-4">No ${status} visitors found.</td></tr>`);
                     return;
                 }
-
                 $.each(appointments, function(index, appt) {
                     const meetingFrom = appt.meetingOn ? new Date(appt.meetingOn).toLocaleString() : 'N/A';
                     const meetingTo = appt.meetingTo ? new Date(appt.meetingTo).toLocaleString() : 'N/A';
-                    
                     let statusBadge = 'badge-secondary';
                     if (appt.status === 'Expected') statusBadge = 'badge-warning';
                     if (appt.status === 'CheckedIn') statusBadge = 'badge-success';
                     if (appt.status === 'CheckedOut') statusBadge = 'badge-info';
-                    if (appt.status === 'CrossedDeadlines') statusBadge = 'badge-danger';
-
+                    // Add more statuses here if you have them
+                    
                     const row = `
                         <tr>
                             <td><i class="fas fa-user-circle fa-2x text-muted"></i></td>
-                            <td>${appt.id || 'N/A'}</td>
-                            <td>${appt.appointmentType || 'Standard'}</td>
-                            <td>${appt.visitorName || 'N/A'}</td>
-                            <td>${appt.visitorType || 'N/A'}</td>
-                            <td>${appt.visitorMobile || 'N/A'}</td>
-                            <td>${appt.scheduler || 'N/A'}</td>
-                            <td>${appt.location || 'N/A'}</td>
-                            <td>${appt.purpose || 'N/A'}</td>
-                            <td>${meetingFrom}</td>
-                            <td>${meetingTo}</td>
-                            <td>${appt.repeatVisit ? 'Yes' : 'No'}</td>
-                            <td><span class="badge ${statusBadge}">${appt.status || 'N/A'}</span></td>
-                        </tr>
-                    `;
+                            <td>${appt.id}</td><td>${appt.appointmentType || 'Standard'}</td><td>${appt.visitorName}</td>
+                            <td>${appt.visitorType}</td><td>${appt.visitorMobile}</td><td>${appt.scheduler || 'N/A'}</td>
+                            <td>${appt.location}</td><td>${appt.purpose}</td><td>${meetingFrom}</td>
+                            <td>${meetingTo}</td><td>${appt.repeatVisit ? 'Yes' : 'No'}</td>
+                            <td><span class="badge ${statusBadge}">${appt.status}</span></td>
+                        </tr>`;
                     tableBody.append(row);
                 });
             },
@@ -70,34 +51,48 @@ $(document).ready(function() {
     }
 
     /**
-     * This is the improved click handler for the colored status boxes.
+     * --- THIS IS THE NEW FUNCTION ---
+     * Its ONLY job is to update the numbers in all the colored boxes.
+     * It makes a separate, quick API call for each status.
+     */
+    function updateAllCounts() {
+        // List of all statuses that have a corresponding box in the HTML
+        const statuses = ['Expected', 'CheckedIn', 'InPremises', 'CrossedDeadlines', 'Upcoming', 'CheckedOut'];
+
+        console.log("Updating all dashboard counts...");
+
+        statuses.forEach(status => {
+            const countElement = $(`#count-${status}`);
+            const apiUrl = `${API_BASE_URL}?status=${status}`;
+
+            // Show a mini-spinner while loading each count
+            countElement.html('<i class="fas fa-spinner fa-xs fa-spin"></i>');
+
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                success: function(data) {
+                    // Update the number with the count of items received
+                    countElement.text(data.length);
+                },
+                error: function() {
+                    // If a count fails, show a '?' to indicate an error
+                    countElement.text('?');
+                }
+            });
+        });
+    }
+
+    /**
+     * Event listener for the colored status boxes.
+     * When a box is clicked, it just loads the data for the main table.
      */
     $('.small-box').on('click', function(e) {
         e.preventDefault();
-
-        // Highlight the selected box for better user experience.
         $('.small-box').removeClass('active-filter');
         $(this).addClass('active-filter');
-
-        // --- THIS IS THE FIX ---
-        // We get the status directly from the element's ID (e.g., "filter-Expected" -> "Expected").
-        // This is much more reliable than reading the text.
         const status = this.id.split('-')[1];
-        
         loadVisitorData(status);
-    });
-
-    /**
-     * This new code ensures data is fresh when you return to the browser tab.
-     */
-    $(window).on('pageshow', function(event) {
-        // 'persisted' is true if the page was loaded from the browser's back/forward cache.
-        if (event.originalEvent.persisted) {
-            console.log("Page was loaded from cache. Reloading active filter data.");
-            // Find which filter is active and reload it.
-            const activeStatus = $('.active-filter').attr('id').split('-')[1] || 'Expected';
-            loadVisitorData(activeStatus);
-        }
     });
     
     // Add a simple CSS rule for the active filter style.
@@ -109,8 +104,11 @@ $(document).ready(function() {
         window.location.href = 'index.html';
     });
 
-    // --- INITIAL LOAD ---
-    // When the page first opens, load the 'Expected' visitors by default and highlight the box.
+    // --- INITIAL PAGE LOAD ---
+    // 1. Load the list for the default "Expected" view into the table.
     loadVisitorData('Expected');
     $('#filter-Expected').addClass('active-filter');
+
+    // 2. Separately, update the counts in ALL the colored boxes.
+    updateAllCounts();
 });
