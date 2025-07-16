@@ -1,11 +1,9 @@
 $(document).ready(function() {
-    // Toggle Yes/No Labels
     $('.custom-control-input').on('change', function() {
         const label = $(this).closest('.d-flex').find('span.toggle-label');
         label.text($(this).is(':checked') ? 'Yes' : 'No');
     }).trigger('change');
 
-    // Reset Button Logic
     $('#resetBtn').on('click', function() {
         const form = $('#visitorTabContent');
         form.find('input[type="text"], input[type="email"], input[type="tel"], input[type="datetime-local"], textarea').val('');
@@ -13,10 +11,46 @@ $(document).ready(function() {
         form.find('input[type="checkbox"]').prop('checked', false);
         $('.custom-control-input').trigger('change');
         $('#details-tab').tab('show');
+        $('.form-control').removeClass('is-invalid');
     });
 
-    // Submit Button Logic
     $('#submitBtn').on('click', function() {
+
+        $('.form-control').removeClass('is-invalid');
+        
+        let isValid = true;
+        let errorMessages = [];
+
+        const requiredFields = [
+            { id: 'visitorType', name: 'Visitor Type' },
+            { id: 'visitorName', name: 'Visitor Name' },
+            { id: 'visitorEmail', name: 'Visitor Email' },
+            { id: 'visitorMobile', name: 'Visitor Mobile' },
+            { id: 'purpose', name: 'Purpose' },
+            { id: 'location', name: 'Location' },
+            { id: 'gate', name: 'Gate' },
+            { id: 'area', name: 'Area' },
+            { id: 'meetingOn', name: 'Meeting On Date' }
+        ];
+
+        requiredFields.forEach(function(field) {
+            const element = $('#' + field.id);
+            
+            if (!element.val() || element.val().trim() === '') {
+                isValid = false;
+                errorMessages.push(field.name);
+                element.addClass('is-invalid');
+            }
+        });
+
+       
+        if (!isValid) {
+            alert('Please fill out the following required fields:\n\n- ' + errorMessages.join('\n- '));
+            return; 
+        }
+        
+
+
         const formData = {
             visitorType: $('#visitorType').val(),
             visitorName: $('#visitorName').val(),
@@ -42,8 +76,6 @@ $(document).ready(function() {
             checkInInstructions: $('#checkInInstructions').val()
         };
 
-        // --- THIS IS THE FIX ---
-        // The URL now correctly points to /api/Appointments to match your controller.
         const apiUrl = 'https://visitor-management-api-sudarsan-a0fshadyesard2fa.southeastasia-01.azurewebsites.net/api/Appointments';
 
         console.log("Submitting to API:", apiUrl);
@@ -57,7 +89,7 @@ $(document).ready(function() {
             success: function(response) {
                 alert('Appointment booked successfully!');
                 console.log('API Response:', response);
-                $('#resetBtn').click();
+                $('#resetBtn').click(); 
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert('Error booking appointment. See console for details.');
