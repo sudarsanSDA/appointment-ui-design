@@ -1,92 +1,101 @@
-
 # 🚀 Visitor Management System - Full-Stack Application
 
-This project is a complete, full-stack appointment booking application featuring a responsive, tab-based frontend and a robust .NET 8 backend API.
+![.NET](https://img.shields.io/badge/.NET-8-512BD4?style=for-the-badge&logo=dotnet)
+![Azure](https://img.shields.io/badge/Azure-App_Service-0089D6?style=for-the-badge&logo=microsoft-azure)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI/CD-2088FF?style=for-the-badge&logo=github-actions)
 
-Developed as part of my internship assignment at **Fidrox Technologies Private Limited**, Bangalore, this project has evolved from a UI prototype into a functional web application that captures appointment data, displays it visually, and persists it in a SQL Server database.
+A complete, full-stack appointment booking system featuring a responsive front-end, a robust .NET 8 API backend, and deployment to the cloud via a CI/CD pipeline. This project was developed as a professional assignment for **Fidrox Technologies Private Limited**.
 
----
-
-## 🌟 Features
-
-* **Modern Frontend:** A professional, responsive UI built with **AdminLTE** and **Bootstrap** for a seamless user experience on any device.
-* **Full-Stack Functionality:** A .NET 8 Web API backend handles business logic and data persistence.
-* **Database Integration:** Uses **Entity Framework Core 8** to connect to a **SQL Server** database, making data storage and retrieval efficient and reliable.
-* **Asynchronous Data Submission:** The frontend communicates with the backend asynchronously using AJAX, providing a smooth user experience without page reloads.
-* **Organized Data Entry:** A two-tabbed interface separates primary visitor details from additional requirements.
-* **Real-Time Dashboard:** A newly added dashboard displays upcoming visitors, appointment counts, and deadlines to provide at-a-glance insights.
-* **Ready for Expansion:** The architecture is modular and ready for future enhancements like user authentication, admin management, PDF export, and charts.
+**(Highly Recommended: Create a short screen recording or GIF of you using the app and embed it here!)**
+`![Application Demo](./screenshots/demo.gif)`
 
 ---
 
-## 💻 Tech Stack
+## 🌐 Live Demo Links
 
-### Frontend
+This application is fully deployed and accessible online.
 
-* **HTML5**
-* **CSS3**
-* **JavaScript (jQuery)**
-* **Bootstrap 4**
-* **AdminLTE 4 Beta**
+*   ### ➡️ **1. Live Application (Front-End on GitHub Pages)**
+    **[https://sudarsansda.github.io/appointment-ui-design/dashboard.html](https://sudarsansda.github.io/appointment-ui-design/dashboard.html)**
+    *This is the main user interface where you can view the dashboard and create new appointments.*
 
-### Backend
-
-* **.NET 8**
-* **ASP.NET Core Web API**
-* **Entity Framework Core 8**
-* **SQL Server (LocalDB)**
+*   ### ➡️ **2. Live API Documentation (Back-End on Azure)**
+    **[https://visitor-management-api-sudarsan-a0fshadyesard2fa.southeastasia-01.azurewebsites.net/swagger/index.html](https://visitor-management-api-sudarsan-a0fshadyesard2fa.southeastasia-01.azurewebsites.net/swagger/index.html)**
+    *This is the live Swagger UI for the backend API, detailing all available endpoints.*
 
 ---
 
-## 🛠️ Setup and Installation
+## ✨ Key Features
 
-To run this project locally, you will need **Visual Studio 2022** with the **ASP.NET and web development** workload and the **.NET 8 SDK**.
+*   **Responsive UI**: Built with Bootstrap & AdminLTE, the interface is fully responsive and provides a seamless experience on both desktop and mobile devices.
+*   **Robust .NET 8 API**: A powerful backend built with ASP.NET Core handles all business logic, data validation, and database operations.
+*   **Full CRUD Functionality**: Users can create new appointments (`POST`) and view all appointments (`GET`).
+*   **Interactive Dashboard**: The dashboard displays real-time counts for different appointment statuses and allows users to dynamically filter the main list by clicking on status cards.
+*   **Client-Side Validation**: The submission form includes mandatory field checks using JavaScript to ensure data integrity before an API call is made.
+*   **Asynchronous Operations**: AJAX is used for all communication with the backend, creating a smooth, single-page-application feel without page reloads.
+*   **Cloud-Native Deployment**: The entire solution is deployed to the cloud, with the API hosted on Microsoft Azure and the UI on GitHub Pages.
+*   **Automated CI/CD Pipeline**: A GitHub Actions workflow automatically builds and deploys the .NET API to Azure whenever changes are pushed to the `main` branch.
+
+---
+
+## 💻 Technology Stack
+
+| Category                  | Technologies & Tools                                                              |
+| ------------------------- | --------------------------------------------------------------------------------- |
+| **Front-End**             | `HTML5`, `CSS3`, `JavaScript (ES6)`, `jQuery`, `Bootstrap`, `AdminLTE`                |
+| **Back-End**              | `.NET 8`, `ASP.NET Core Web API`, `C#`, `Entity Framework Core 8`                     |
+| **Database & Deployment** | `Microsoft Azure App Service`, `Azure SQL Database`, `GitHub Pages`, `GitHub Actions (CI/CD)` |
+
+---
+
+<details>
+<summary>View Local Development Setup Instructions</summary>
+
+To run this project on your local machine, you will need **Visual Studio 2022** with the **"ASP.NET and web development"** workload and the **.NET 8 SDK**.
 
 ### 1. Backend Setup (VisitorManagementAPI)
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/sudarsanSDA/appointment-ui-design.git
-   ```
-2. Open the `VisitorManagementAPI.sln` solution file in Visual Studio.
-3. **Restore NuGet Packages:** Visual Studio should do this automatically. If not, right-click the solution in the Solution Explorer and select "Restore NuGet Packages".
-4. **Create the Database:** Open the **Package Manager Console** (`Tools > NuGet Package Manager > Package Manager Console`) and run:
-
-   ```powershell
-   Update-Database
-   ```
-5. **Run the API:** Press **F5** or click the green play button to launch the API. The Swagger UI (e.g., `https://localhost:7103/swagger`) should open. Take note of the port.
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/sudarsanSDA/appointment-ui-design.git
+    cd appointment-ui-design/API/VisitorManagementAPI
+    ```
+2.  **Install EF Core Tools:** If you don't have it, install the command-line tool.
+    ```powershell
+    dotnet tool install --global dotnet-ef
+    ```
+3.  **Restore Packages:** Open the `VisitorManagementAPI.sln` file in Visual Studio. It should restore packages automatically.
+4.  **Update Connection String:** In `appsettings.Development.json`, ensure the `DefaultConnection` string points to your local SQL Server instance.
+5.  **Create the Database:** Open the **Package Manager Console** (`View > Other Windows > Package Manager Console`) and run the migration command:
+    ```powershell
+    Update-Database
+    ```
+6.  **Run the API:** Press **F5** or click the green run button. The Swagger UI will open (e.g., at `https://localhost:7123/swagger`). Note the port number.
 
 ### 2. Frontend Setup
 
-1. **Configure API Endpoint:** Open `script.js` and ensure the `apiUrl` matches the backend port:
+1.  **Configure API Endpoint:** Open `js/script.js` and `js/dashboard.js` and ensure the `apiUrl` or `API_BASE_URL` constant matches your backend's local port.
+    ```javascript
+    const apiUrl = 'https://localhost:7123/api/Appointments'; 
+    ```
+2.  **Launch the App:** Open `index.html` or `dashboard.html` in your web browser using a live server extension or by simply opening the file. The application is now connected to your local API.
 
-   ```javascript
-   const apiUrl = 'https://localhost:7103/api/appointments'; 
-   ```
-2. **Launch the App:** Open `index.html` in your browser. The form and dashboard will now be active.
-
-You can now fill out the form, submit data, and view appointment stats directly on the dashboard.
+</details>
 
 ---
 
-## 👨‍💻 About Me
+## 👤 Contact
 
 **P. Sudarsan**
-B.Tech – Computer Engineering
-📧 [sudarsanjcr@gmail.com](mailto:sudarsanjcr@gmail.com)
-🌐 [https://www.sudarsan.net.in](https://www.sudarsan.net.in)
+*   📧 Email: [sudarsanjcr@gmail.com](mailto:sudarsanjcr@gmail.com)
+*   🌐 Portfolio: [https://www.sudarsan.net.in](https://www.sudarsan.net.in)
+*   🔗 LinkedIn: [Your LinkedIn Profile URL]
 
 ---
 
 ## 🏢 Project Attribution
 
-This project was created for and is attributed to:
+This project was developed for and is attributed to **Fidrox Technologies Private Limited** as part of an internship assignment.
 
-**Fidrox Technologies Private Limited**
-Jayanagar, Bangalore – INDIA
-📅 Internship Project – 2025
-
-> **© 2025 Fidrox Technologies Private Limited, Bangalore, INDIA. All rights reserved.**
-
+> © 2025 Fidrox Technologies Private Limited, Bangalore, INDIA. All rights reserved.
