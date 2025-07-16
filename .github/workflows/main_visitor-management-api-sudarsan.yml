@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -22,11 +22,15 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
-
+          
+      # ----------- CHANGE IS HERE -----------
       - name: Build with dotnet
+        working-directory: ./API/VisitorManagementAPI 
         run: dotnet build --configuration Release
 
+      # ----------- AND CHANGE IS HERE -----------
       - name: dotnet publish
+        working-directory: ./API/VisitorManagementAPI
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
@@ -40,8 +44,8 @@ jobs:
     needs: build
     
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
@@ -63,4 +67,3 @@ jobs:
           app-name: 'visitor-management-api-sudarsan'
           slot-name: 'Production'
           package: .
-          
