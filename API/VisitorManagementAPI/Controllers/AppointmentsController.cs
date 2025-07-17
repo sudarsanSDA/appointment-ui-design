@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using VisitorManagementAPI.Data;
 using VisitorManagementAPI.Models;
 
-// Make sure this namespace matches your project name!
 namespace VisitorManagementAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -17,29 +16,35 @@ namespace VisitorManagementAPI.Controllers
             _context = context;
         }
 
-        // --- THIS METHOD IS UPGRADED ---
-        // It now handles two types of requests:
-        // 1. GET: api/Appointments (gets all appointments)
-        // 2. GET: api/Appointments?status=CheckedIn (gets only appointments with a specific status)
+        // --- THIS METHOD HAS BEEN UPGRADED WITH THE FINAL LOGIC ---
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments([FromQuery] string? status)
         {
             // Start with a query for all appointments.
-            // Using AsQueryable() lets us build the query step-by-step.
             var query = _context.Appointments.AsQueryable();
 
-            // If a 'status' is provided in the URL (e.g., "?status=CheckedIn"),
-            // we add a filter to our database query.
             if (!string.IsNullOrEmpty(status))
             {
-                query = query.Where(a => a.Status == status);
+                // --- THIS IS THE NEW, SMARTER LOGIC ---
+                if (status == "Expected")
+                {
+                    // For the "Expected" status, we only want appointments from today onwards.
+                    // DateTime.Now.Date gets today's date at midnight (00:00:00).
+                    var today = DateTime.Now.Date; 
+                    query = query.Where(a => a.Status == "Expected" && a.MeetingOn >= today);
+                }
+                else
+                {
+                    // For all other statuses (like "CheckedIn", "CheckedOut"), we don't need a date filter.
+                    query = query.Where(a => a.Status == status);
+                }
             }
 
-            // Execute the final query, order by the newest first, and return the list.
+            // Execute the final query, ordering by the newest meetings first.
             return await query.OrderByDescending(a => a.MeetingOn).ToListAsync();
         }
 
-        // POST: api/appointments
+        // The POST method remains the same. No changes are needed here.
         [HttpPost]
         public async Task<IActionResult> CreateAppointment([FromBody] Appointment appointment)
         {
@@ -47,14 +52,10 @@ namespace VisitorManagementAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            // Because our model has a default value for Status, we don't need to set it here.
-            // It will automatically be "Expected".
-
+            
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 
-            // Return the created object with its new DB-generated Id
             return Ok(appointment);
         }
     }
