@@ -16,6 +16,7 @@ namespace VisitorManagementAPI.Controllers
             _context = context;
         }
 
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments([FromQuery] string? status)
         {
@@ -33,7 +34,7 @@ namespace VisitorManagementAPI.Controllers
                     query = query.Where(a => a.Status == status);
                 }
             }
-            
+
             return await query.OrderByDescending(a => a.MeetingOn).ToListAsync();
         }
 
@@ -50,5 +51,28 @@ namespace VisitorManagementAPI.Controllers
 
             return Ok(appointment);
         }
+
+        
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> UpdateAppointmentStatus(int id, [FromBody] UpdateStatusRequest request)
+        {
+            var appointment = await _context.Appointments.FindAsync(id);
+
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            appointment.Status = request.Status;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+    }
+
+   
+    public class UpdateStatusRequest
+    {
+        public string? Status { get; set; }
     }
 }
